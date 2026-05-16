@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1a7f37">
+  <title>Presentation Timer</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ===== SETUP VIEW ===== -->
+  <main id="setup" class="view">
+    <div class="setup-inner">
+      <h1>Presentation Timer</h1>
+
+      <label class="field">
+        <span>Presentation name</span>
+        <input id="presName" type="text" placeholder="My talk" autocomplete="off">
+      </label>
+
+      <div class="sections-head">
+        <span>Sections</span>
+        <span id="totalSum" class="total-sum">Total 0:00</span>
+      </div>
+      <ul id="sectionList" class="section-list"></ul>
+      <button id="addSection" class="btn ghost">+ Add section</button>
+
+      <div class="preset-bar">
+        <select id="presetSelect" aria-label="Saved presets">
+          <option value="">— Saved presets —</option>
+        </select>
+        <button id="loadPreset" class="btn small">Load</button>
+        <button id="deletePreset" class="btn small danger">Delete</button>
+        <button id="savePreset" class="btn small">Save…</button>
+      </div>
+
+      <div class="segmented" role="group" aria-label="Display mode">
+        <button id="modeStopwatch" class="seg active" data-mode="stopwatch">Stopwatch</button>
+        <button id="modeTimer" class="seg" data-mode="timer">Timer</button>
+      </div>
+
+      <button id="startBtn" class="btn primary big">Start ▶</button>
+      <p class="hint">Tip: add to your home screen for full-screen offline use.</p>
+    </div>
+  </main>
+
+  <!-- ===== RUN VIEW ===== -->
+  <main id="run" class="view hidden">
+    <div class="top-bar">
+      <span id="clock" class="clock">--:--</span>
+      <span id="sectionLabel" class="section-label">—</span>
+      <div class="top-right">
+        <span id="totalLabel" class="total-label">0:00 / 0:00</span>
+        <button id="modeToggle" class="mode-mini" aria-label="Toggle display mode">STOPWATCH</button>
+      </div>
+    </div>
+
+    <div id="bigWrap" class="big-wrap">
+      <div id="bigTime" class="big-time">0:00</div>
+      <div id="bigName" class="big-name"></div>
+    </div>
+
+    <div class="controls">
+      <button id="prevBtn" class="btn ctrl">⏮ Prev</button>
+      <button id="playBtn" class="btn ctrl primary">▶ Start</button>
+      <button id="nextBtn" class="btn ctrl">Next ⏭</button>
+      <button id="resetBtn" class="btn ctrl">↻ Reset</button>
+      <button id="exitBtn" class="btn ctrl">✕ Exit</button>
+      <label class="auto-toggle">
+        <input id="autoAdvance" type="checkbox" checked> Auto-advance
+      </label>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
