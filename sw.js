@@ -1,4 +1,4 @@
-const CACHE = "pres-timer-v2";
+const CACHE = "pres-timer-v3";
 const ASSETS = [
   "./",
   "index.html",

@@ -345,6 +345,38 @@ $("exitBtn").addEventListener("click", exitRun);
   refreshPresetSelect();
 })();
 
+// ---------- Fullscreen ----------
+function isFullscreen() {
+  return !!(document.fullscreenElement || document.webkitFullscreenElement);
+}
+
+function requestFS() {
+  const el = document.documentElement;
+  const req = el.requestFullscreen || el.webkitRequestFullscreen;
+  if (req) req.call(el).catch(() => {});
+}
+
+function updateFsBtn() {
+  $("fsBtn").classList.toggle("hidden", isFullscreen());
+}
+
+$("fsBtn").addEventListener("click", requestFS);
+
+// Hide the button whenever fullscreen is active; show it when lost
+document.addEventListener("fullscreenchange", updateFsBtn);
+document.addEventListener("webkitfullscreenchange", updateFsBtn);
+
+// Re-check when the user returns to the app after locking the phone
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) {
+    // Small delay so the browser has settled before we check/show the button
+    setTimeout(updateFsBtn, 300);
+  }
+});
+
+// Initial state on load
+updateFsBtn();
+
 // ---------- Service worker ----------
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
