@@ -181,6 +181,8 @@ function exitRun() {
   $("run").classList.remove("overtime");
   $("run").classList.add("hidden");
   $("setup").classList.remove("hidden");
+  // If a SW update arrived while presenting, reload now that we're safely out
+  if (window.__swUpdatePending) location.reload();
 }
 
 // ---------- Render ----------
@@ -380,4 +382,17 @@ updateFsBtn();
 // ---------- Service worker ----------
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+
+  // When a new SW version activates, reload the page to pick up fresh assets.
+  // If a presentation is running, wait until the user exits to avoid disruption.
+  navigator.serviceWorker.addEventListener("message", (e) => {
+    if (e.data?.type !== "SW_UPDATED") return;
+    const running = rt && rt.running && !document.getElementById("run").classList.contains("hidden");
+    if (running) {
+      // Flag it; reload will happen when they exit
+      window.__swUpdatePending = true;
+    } else {
+      location.reload();
+    }
+  });
 }
